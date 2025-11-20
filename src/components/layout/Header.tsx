@@ -84,15 +84,62 @@ export default function Header() {
         </div>
       </div>
 
-      {/* Mobile menu */}
-      <div className={`md:hidden transition-max-h overflow-hidden bg-black/95 border-t border-white/5 ${open ? "max-h-96" : "max-h-0"}`}>
-        <div className="flex flex-col gap-3 px-6 py-4">
-          <a href="#rooms" className="text-sm text-neutral-300" onClick={() => setOpen(false)}>ROOMS</a>
-          <a href="#experience" className="text-sm text-neutral-300" onClick={() => setOpen(false)}>EXPERIENCE</a>
-          <a href="#access" className="text-sm text-neutral-300" onClick={() => setOpen(false)}>ACCESS</a>
-          <a href="#reserve" className="rounded-md bg-white/6 px-3 py-2 text-sm text-white text-left" onClick={() => setOpen(false)}>RESERVE</a>
+      {/* Mobile menu (animated via Framer Motion) */}
+      <motion.div
+        className="md:hidden overflow-hidden bg-black/95 border-t border-white/5"
+        initial="closed"
+        animate={open ? "open" : "closed"}
+        variants={{
+          closed: { maxHeight: 0, opacity: 0, transition: { when: "afterChildren" } },
+          open: { maxHeight: 420, opacity: 1, transition: { when: "beforeChildren", staggerChildren: 0.04 } },
+        }}
+      >
+        <div className="px-6 py-4">
+          <motion.a
+            href="#rooms"
+            className="block text-sm text-neutral-300 py-2"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.28 }}
+          >
+            ROOMS
+          </motion.a>
+
+          <motion.a
+            href="#experience"
+            className="block text-sm text-neutral-300 py-2"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.28, delay: 0.04 }}
+          >
+            EXPERIENCE
+          </motion.a>
+
+          <motion.a
+            href="#access"
+            className="block text-sm text-neutral-300 py-2"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.28, delay: 0.08 }}
+          >
+            ACCESS
+          </motion.a>
+
+          <motion.a
+            href="#reserve"
+            className="mt-2 inline-block rounded-md bg-white/6 px-3 py-2 text-sm text-white text-left"
+            onClick={() => setOpen(false)}
+            initial={{ opacity: 0, y: 8 }}
+            animate={open ? { opacity: 1, y: 0 } : { opacity: 0, y: 8 }}
+            transition={{ duration: 0.28, delay: 0.12 }}
+          >
+            RESERVE
+          </motion.a>
         </div>
-      </div>
+      </motion.div>
     </header>
   );
 }
