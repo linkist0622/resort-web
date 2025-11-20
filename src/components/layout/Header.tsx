@@ -2,9 +2,25 @@
 
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "framer-motion";
 
 export default function Header() {
   const [open, setOpen] = useState(false);
+
+  const top = {
+    closed: { rotate: 0, y: -6 },
+    open: { rotate: 45, y: 0 },
+  };
+  const middle = {
+    closed: { opacity: 1 },
+    open: { opacity: 0 },
+  };
+  const bottom = {
+    closed: { rotate: 0, y: 6 },
+    open: { rotate: -45, y: 0 },
+  };
+
+  const lineProps = { className: "block h-0.5 w-5 bg-white rounded-sm" };
 
   return (
     <header className="sticky top-0 z-50 bg-black/40 backdrop-blur-sm border-b border-white/5">
@@ -38,9 +54,32 @@ export default function Header() {
             className="relative flex h-10 w-10 items-center justify-center rounded-md bg-white/6 p-2 text-white transition-all ring-0 focus:outline-none focus:ring-2 focus:ring-white/20"
           >
             <span className="sr-only">Menu</span>
-            <span className={`block h-0.5 w-5 origin-center bg-white transition-transform ${open ? "translate-y-[0.2rem] rotate-45" : "-translate-y-1.5"}`} />
-            <span className={`block h-0.5 w-5 bg-white transition-opacity ${open ? "opacity-0" : "opacity-100"}`} />
-            <span className={`block h-0.5 w-5 origin-center bg-white transition-transform ${open ? "-translate-y-[0.2rem] -rotate-45" : "translate-y-1.5"}`} />
+            <motion.span
+              aria-hidden
+              variants={top}
+              initial="closed"
+              animate={open ? "open" : "closed"}
+              transition={{ duration: 0.28, ease: "easeInOut" }}
+              {...lineProps}
+              style={{ display: "block" }}
+            />
+            <motion.span
+              aria-hidden
+              variants={middle}
+              initial="closed"
+              animate={open ? "open" : "closed"}
+              transition={{ duration: 0.22, ease: "easeInOut" }}
+              className="block h-0.5 w-5 bg-white my-1"
+            />
+            <motion.span
+              aria-hidden
+              variants={bottom}
+              initial="closed"
+              animate={open ? "open" : "closed"}
+              transition={{ duration: 0.28, ease: "easeInOut" }}
+              {...lineProps}
+              style={{ display: "block" }}
+            />
           </button>
         </div>
       </div>
